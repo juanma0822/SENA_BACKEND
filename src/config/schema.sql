@@ -17,7 +17,8 @@ CREATE TABLE usuarios (
   celular VARCHAR,
   telefono_fijo VARCHAR,
   rol VARCHAR, -- aprendiz, funcionario, guarda
-  activo BOOLEAN DEFAULT TRUE -- true = activo, false = desactivado
+  activo BOOLEAN DEFAULT TRUE, -- true = activo, false = desactivado
+  fecha_nacimiento DATE,
 );
 
 -- Tabla: aprendices
