@@ -1,5 +1,6 @@
 const FuncionarioModel = require('../models/funcionarios.model');
 const UsuarioService = require('../services/usuarios.services');
+const moment = require('moment');  // Usa moment.js para manejar la fecha
 
 exports.crearFuncionario = async (req, res) => {
   try {
@@ -25,6 +26,9 @@ exports.crearFuncionario = async (req, res) => {
       tipo_funcionario
     } = req.body;
 
+    // Convertimos la fecha de "DD/MMMM/YYYY" a "YYYY-MM-DD"
+    const fechaFormateada = moment(fecha_nacimiento, "DD/MMMM/YYYY").format("YYYY-MM-DD");
+
     const nuevoUsuario = await UsuarioService.crearUsuario({
       numero_documento,
       nombres,
@@ -41,7 +45,7 @@ exports.crearFuncionario = async (req, res) => {
       direccion,
       celular,
       telefono_fijo,
-      fecha_nacimiento,
+      fecha_nacimiento: fechaFormateada,
       rol: 'funcionario'
     });
 
