@@ -1,5 +1,6 @@
 const AprendizModel = require('../models/aprendices.model');
 const UsuarioService = require('../services/usuarios.services');
+const moment = require('moment');  // Usa moment.js para manejar la fecha
 
 exports.crearAprendiz = async (req, res) => {
   try {
@@ -19,12 +20,15 @@ exports.crearAprendiz = async (req, res) => {
       direccion,
       celular,
       telefono_fijo,
-      fecha_nacimiento,
+      fecha_nacimiento,  // Recibimos la fecha como string
       programa_formacion,
       numero_ficha,
-      nivelSisben, // Nueva columna
-      grupoSisben  // Nueva columna
+      nivelSisben,
+      grupoSisben
     } = req.body;
+
+    // Convertimos la fecha de "DD/MMMM/YYYY" a "YYYY-MM-DD"
+    const fechaFormateada = moment(fecha_nacimiento, "DD/MMMM/YYYY").format("YYYY-MM-DD");
 
     // PRIMERO creamos el usuario
     const nuevoUsuario = await UsuarioService.crearUsuario({
@@ -43,7 +47,7 @@ exports.crearAprendiz = async (req, res) => {
       direccion,
       celular,
       telefono_fijo,
-      fecha_nacimiento,
+      fecha_nacimiento: fechaFormateada,  // Usamos la fecha formateada aquí
       rol: 'aprendiz'
     });
 
@@ -51,8 +55,8 @@ exports.crearAprendiz = async (req, res) => {
     const nuevoAprendiz = await AprendizModel.crearAprendiz(numero_documento, {
       programa_formacion,
       numero_ficha,
-      nivelSisben, // Nueva columna
-      grupoSisben  // Nueva columna
+      nivelSisben,
+      grupoSisben
     });
 
     res.status(201).json({
