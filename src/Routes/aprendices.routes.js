@@ -98,6 +98,10 @@ router.get('/:id', AprendizController.obtenerAprendiz);
  *                 type: string
  *               numero_ficha:
  *                 type: string
+ *               nivelSisben:
+ *                 type: string
+ *               grupoSisben:
+ *                 type: integer
  *     responses:
  *       201:
  *         description: Aprendiz creado correctamente
@@ -130,6 +134,10 @@ router.post('/', AprendizController.crearAprendiz);
  *                 type: string
  *               numero_ficha:
  *                 type: string
+ *               nivelSisben:
+ *                 type: string
+ *               grupoSisben:
+ *                 type: integer
  *     responses:
  *       200:
  *         description: Aprendiz actualizado correctamente

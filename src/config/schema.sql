@@ -25,6 +25,8 @@ CREATE TABLE aprendices (
   numero_documento VARCHAR PRIMARY KEY,
   programa_formacion VARCHAR,
   numero_ficha VARCHAR,
+  nivelSisben VARCHAR,  -- Nueva columna
+  grupoSisben INTEGER,  -- Nueva columna
   CONSTRAINT fk_aprendiz_usuario FOREIGN KEY (numero_documento) REFERENCES usuarios(numero_documento)
 );
 

@@ -21,7 +21,9 @@ exports.crearAprendiz = async (req, res) => {
       telefono_fijo,
       fecha_nacimiento,
       programa_formacion,
-      numero_ficha
+      numero_ficha,
+      nivelSisben, // Nueva columna
+      grupoSisben  // Nueva columna
     } = req.body;
 
     // PRIMERO creamos el usuario
@@ -48,7 +50,9 @@ exports.crearAprendiz = async (req, res) => {
     // LUEGO creamos el aprendiz
     const nuevoAprendiz = await AprendizModel.crearAprendiz(numero_documento, {
       programa_formacion,
-      numero_ficha
+      numero_ficha,
+      nivelSisben, // Nueva columna
+      grupoSisben  // Nueva columna
     });
 
     res.status(201).json({

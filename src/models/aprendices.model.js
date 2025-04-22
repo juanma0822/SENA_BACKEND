@@ -1,12 +1,12 @@
 const db = require('../db');
 
 const crearAprendiz = async (numero_documento, datos) => {
-  const { programa_formacion, numero_ficha } = datos;
+  const { programa_formacion, numero_ficha, nivelSisben, grupoSisben } = datos; // Nuevas columnas
   const result = await db.query(`
-    INSERT INTO aprendices (numero_documento, programa_formacion, numero_ficha)
-    VALUES ($1, $2, $3)
+    INSERT INTO aprendices (numero_documento, programa_formacion, numero_ficha, nivelSisben, grupoSisben)
+    VALUES ($1, $2, $3, $4, $5)
     RETURNING *;
-  `, [numero_documento, programa_formacion, numero_ficha]);
+  `, [numero_documento, programa_formacion, numero_ficha, nivelSisben, grupoSisben]); // Nuevas columnas
   return result.rows[0];
 };
 
@@ -31,11 +31,13 @@ const obtenerAprendizPorDoc = async (numero_documento) => {
 };
 
 const actualizarAprendiz = async (numero_documento, datos) => {
-  const { programa_formacion, numero_ficha } = datos;
+  const { programa_formacion, numero_ficha, nivelSisben, grupoSisben } = datos; // Nuevas columnas
   const result = await db.query(`
-    UPDATE aprendices SET programa_formacion = $2, numero_ficha = $3
-    WHERE numero_documento = $1 RETURNING *;
-  `, [numero_documento, programa_formacion, numero_ficha]);
+    UPDATE aprendices
+    SET programa_formacion = $2, numero_ficha = $3, nivelSisben = $4, grupoSisben = $5
+    WHERE numero_documento = $1
+    RETURNING *;
+  `, [numero_documento, programa_formacion, numero_ficha, nivelSisben, grupoSisben]); // Nuevas columnas
   return result.rows[0];
 };
 
