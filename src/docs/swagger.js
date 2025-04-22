@@ -6,7 +6,7 @@ const options = {
     info: {
       title: "API SENA - Documentación",
       version: "1.0.0",
-      description: "Documentación de la API SENA hecha por JuanmaSoft 🔥"
+      description: "Documentación de la API SENA hecha por JuanmaSoft"
     },
     servers: [
       {
@@ -20,14 +20,19 @@ const options = {
     ],
     components: {
       securitySchemes: {
-        JWT: {
+        BearerAuth: {
           type: "apiKey",
-          name: "Authorization",
           in: "header",
+          name: "Authorization",
           description: "Token JWT. Formato: Bearer {token}"
         }
       }
-    }
+    },
+    security: [
+      {
+        BearerAuth: []
+      }
+    ]
   },
   apis: ["./src/Routes/*.js"], // Mayúscula en 'Routes'
 };
