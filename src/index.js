@@ -7,11 +7,11 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./docs/swagger');
 
 // Rutas
-const usuarioRoutes = require('./routes/usuarios.routes');
-const aprendizRoutes = require('./routes/aprendices.routes');
-const funcionarioRoutes = require('./routes/funcionarios.routes');
-const guardaRoutes = require('./routes/guardas.routes');
-const adminRoutes = require('./routes/admin.routes');
+const usuarioRoutes = require('./Routes/usuarios.routes');
+const aprendizRoutes = require('./Routes/aprendices.routes');
+const funcionarioRoutes = require('./Routes/funcionarios.routes');
+const guardaRoutes = require('./Routes/guardas.routes');
+const adminRoutes = require('./Routes/admin.routes');
 const authRoutes = require('./Routes/auth.routes'); // NUEVA RUTA DE LOGIN
 
 const app = express();
