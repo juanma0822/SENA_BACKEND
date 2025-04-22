@@ -26,7 +26,7 @@ const verifyCredentials = async ({ correo_institucional, contrasena }) => {
     apellidos: usuario.apellidos
   };
 
-  const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '3h' });
+  const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '24h' });
 
   return token;
 };
