@@ -28,10 +28,15 @@ const listarIngresosUsuarioDia = async (numero_documento) => {
 const listarIngresosUsuario = async (numero_documento) => {
     const ingresos = await IngresosModel.obtenerIngresosPorUsuario(numero_documento);
     return ingresos;
-  };
+};
+
+const getResumenDiario = async (numero_documento) => {
+  return await IngresosModel.obtenerResumenDiario(numero_documento);
+};
 
 module.exports = {
   registrarIngresoSalida,
   listarIngresosUsuarioDia,
   listarIngresosUsuario,
+  getResumenDiario,
 };

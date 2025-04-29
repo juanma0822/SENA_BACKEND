@@ -49,4 +49,16 @@ router.get('/ingresos-dia', verifyToken, IngresosController.getIngresosDelDia);
  */
 router.get('/historial-usuario', verifyToken, IngresosController.obtenerIngresosPorUsuario);
 
+/**
+ * @swagger
+ * /api/ingresos/resumen-dia:
+ *   get:
+ *     summary: Obtener resuemn diaria de ingresos del usuario autenticado
+ *     tags: [Ingresos]
+ *     responses:
+ *       200:
+ *         description: Historial de ingresos obtenido
+ */
+router.get('/resumen-dia', verifyToken, IngresosController.resumenDiario);
+
 module.exports = router;

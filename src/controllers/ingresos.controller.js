@@ -39,8 +39,21 @@ const obtenerIngresosPorUsuario = async (req, res) => {
   }
 };
 
+const resumenDiario = async (req, res) => {
+  try {
+    const { numero_documento } = req.user; // o donde guardes el usuario logueado
+
+    const resumen = await IngresosService.getResumenDiario(numero_documento);
+    res.json(resumen);
+  } catch (error) {
+    console.error("Error al obtener resumen diario:", error);
+    res.status(500).json({ error: "Error al obtener el resumen diario" });
+  }
+};
+
 module.exports = {
   registrarIngresoSalida,
   getIngresosDelDia,
   obtenerIngresosPorUsuario,
+  resumenDiario,
 };

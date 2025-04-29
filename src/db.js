@@ -13,8 +13,12 @@ const pool = new Pool({
 });
 
 pool.connect()
-  .then(() => {
+  .then((client) => {
     console.log('✅ Conexión exitosa a PostgreSQL (con SSL - Supabase)');
+    // Configuramos la zona horaria a 'America/Bogota'
+    client.query(`SET TIMEZONE = 'America/Bogota'`)
+      .then(() => console.log('✅ Zona horaria configurada a Colombia (America/Bogota)'))
+      .catch((err) => console.error('❌ Error al configurar la zona horaria:', err));
   })
   .catch((err) => {
     console.error('❌ Error al conectar con PostgreSQL:', err);

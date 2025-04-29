@@ -67,9 +67,28 @@ const obtenerUltimoIngresoDelDia = async (numero_documento) => {
   return fila ? convertirAHoraColombia(fila) : undefined;
 };
 
+const obtenerResumenDiario = async (numero_documento) => {
+  const result = await db.query(`
+    SELECT
+      TO_CHAR(fecha_hora::date, 'YYYY-MM-DD') AS fecha,
+      TO_CHAR(MIN(fecha_hora), 'YYYY-MM-DD HH24:MI:SS') AS primer_ingreso,
+      TO_CHAR(MAX(fecha_hora) , 'YYYY-MM-DD HH24:MI:SS') AS ultima_salida,
+      COUNT(*) FILTER (WHERE tipo_ingreso = 'entrada') AS total_entradas,
+      COUNT(*) FILTER (WHERE tipo_ingreso = 'salida') AS total_salidas
+    FROM ingresos
+    WHERE numero_documento = $1
+    GROUP BY fecha
+    ORDER BY fecha DESC
+  `, [numero_documento]);
+
+  return result.rows;
+};
+
+
 module.exports = {
   crearIngreso,
   obtenerIngresosPorUsuario,
   obtenerIngresosDelDia,
   obtenerUltimoIngresoDelDia,
+  obtenerResumenDiario,
 };
