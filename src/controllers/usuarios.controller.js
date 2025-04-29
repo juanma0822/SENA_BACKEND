@@ -1,5 +1,7 @@
 const UsuarioService = require('../services/usuarios.services');
 const UsuarioModel = require('../models/usuarios.model');
+const AprendizModel = require('../models/aprendices.model');
+const FuncionarioModel = require('../models/funcionarios.model');
 
 exports.crearUsuario = async (req, res) => {
   try {
@@ -38,8 +40,25 @@ exports.obtenerUsuarios = async (req, res) => {
 
 exports.obtenerUsuarioPorId = async (req, res) => {
   try {
-    const usuario = await UsuarioModel.obtenerPorDocumento(req.params.id);
-    if (!usuario) return res.status(404).json({ error: 'Usuario no encontrado' });
+    const { numero_documento, rol } = req.user; // Datos del token decodificado
+
+    let usuario;
+
+    if (rol === 'aprendiz') {
+      // Si es aprendiz, obtenemos datos de la tabla aprendices
+      usuario = await AprendizModel.obtenerAprendizPorDoc(numero_documento);
+    } else if (rol === 'funcionario') {
+      // Si es funcionario, obtenemos datos de la tabla funcionarios
+      usuario = await FuncionarioModel.obtenerFuncionarioPorDoc(numero_documento);
+    } else {
+      // Si es otro rol, obtenemos solo los datos de la tabla usuarios
+      usuario = await UsuarioModel.obtenerPorDocumento(numero_documento);
+    }
+
+    if (!usuario) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
     res.json(usuario);
   } catch (error) {
     res.status(500).json({ error: 'Error al obtener usuario' });

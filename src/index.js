@@ -12,7 +12,8 @@ const aprendizRoutes = require('./Routes/aprendices.routes');
 const funcionarioRoutes = require('./Routes/funcionarios.routes');
 const guardaRoutes = require('./Routes/guardas.routes');
 const adminRoutes = require('./Routes/admin.routes');
-const authRoutes = require('./Routes/auth.routes'); // NUEVA RUTA DE LOGIN
+const authRoutes = require('./Routes/auth.routes'); 
+const ingresoRoutes = require('./Routes/ingresos.routes'); // NUEVA RUTA DE INGRESOS
 
 const app = express();
 app.use(cors());
@@ -37,7 +38,8 @@ app.use('/api/aprendices', aprendizRoutes);
 app.use('/api/funcionarios', funcionarioRoutes);
 app.use('/api/guardas', guardaRoutes);
 app.use('/api/admin', adminRoutes);
-app.use('/api/auth', authRoutes); // NUEVA RUTA DE LOGIN
+app.use('/api/auth', authRoutes); 
+app.use('/api/ingresos', ingresoRoutes); // NUEVA RUTA DE INGRESOS
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {  // Cambié 'localhost' por '0.0.0.0'

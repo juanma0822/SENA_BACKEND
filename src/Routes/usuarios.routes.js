@@ -47,7 +47,7 @@ router.get('/', verifyToken, UsuarioController.obtenerUsuarios);
  *       404:
  *         description: Usuario no encontrado
  */
-router.get('/:id', UsuarioController.obtenerUsuarioPorId);
+router.get('/info', verifyToken, UsuarioController.obtenerUsuarioPorId);
 
 /**
  * @swagger
