@@ -245,17 +245,12 @@ router.post('/guarda', UsuarioController.crearGuarda);
 
 /**
  * @swagger
- * /api/usuarios/{id}:
+ * /api/usuarios/info:
  *   put:
- *     summary: Actualizar un usuario por ID
+ *     summary: Actualizar información del usuario autenticado
  *     tags: [Usuarios]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: ID del usuario
+ *     security:
+ *       - bearerAuth: [] # Indica que esta ruta requiere autenticación con token
  *     requestBody:
  *       required: true
  *       content:
@@ -263,66 +258,97 @@ router.post('/guarda', UsuarioController.crearGuarda);
  *           schema:
  *             type: object
  *             properties:
+ *               programa_formacion:
+ *                 type: string
+ *                 description: Programa de formación (solo para aprendices)
+ *               numero_ficha:
+ *                 type: string
+ *                 description: Número de ficha (solo para aprendices)
+ *               nivelSisben:
+ *                 type: string
+ *                 description: Nivel del SISBEN (solo para aprendices)
+ *               grupoSisben:
+ *                 type: integer
+ *                 description: Grupo del SISBEN (solo para aprendices)
+ *               cargo:
+ *                 type: string
+ *                 description: Cargo del funcionario (solo para funcionarios)
+ *               area_trabajo:
+ *                 type: string
+ *                 description: Área de trabajo del funcionario (solo para funcionarios)
+ *               tipo_funcionario:
+ *                 type: string
+ *                 description: Tipo de funcionario (solo para funcionarios)
  *               nombres:
  *                 type: string
+ *                 description: Nombres del usuario
  *               apellidos:
  *                 type: string
+ *                 description: Apellidos del usuario
  *               correo_personal:
  *                 type: string
+ *                 description: Correo personal del usuario
  *               correo_institucional:
  *                 type: string
+ *                 description: Correo institucional del usuario
  *               contrasena:
  *                 type: string
+ *                 description: Contraseña del usuario
  *               tipo_documento:
  *                 type: string
+ *                 description: Tipo de documento del usuario
  *               lugar_expedicion:
  *                 type: string
+ *                 description: Lugar de expedición del documento
  *               genero:
  *                 type: string
+ *                 description: Género del usuario
  *               edad:
  *                 type: integer
+ *                 description: Edad del usuario
  *               departamento:
  *                 type: string
+ *                 description: Departamento del usuario
  *               municipio:
  *                 type: string
+ *                 description: Municipio del usuario
  *               direccion:
  *                 type: string
+ *                 description: Dirección del usuario
  *               celular:
  *                 type: string
+ *                 description: Celular del usuario
  *               telefono_fijo:
  *                 type: string
- *               fecha_nacimiento:
- *                 type: string
- *                 format: date
+ *                 description: Teléfono fijo del usuario
  *     responses:
  *       200:
  *         description: Usuario actualizado correctamente
  *       400:
  *         description: Error en los datos enviados
- *       404:
- *         description: Usuario no encontrado
+ *       401:
+ *         description: No autorizado (token inválido o no proporcionado)
+ *       500:
+ *         description: Error interno del servidor
  */
-router.put('/:id', UsuarioController.actualizarUsuario);
+router.put('/info',verifyToken, UsuarioController.actualizarUsuario);
 
 /**
  * @swagger
- * /api/usuarios/{id}:
+ * /api/usuarios:
  *   delete:
- *     summary: Eliminar un usuario por ID (desactivación lógica)
+ *     summary: Eliminar el usuario autenticado (desactivación lógica)
  *     tags: [Usuarios]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: ID del usuario
+ *     security:
+ *       - bearerAuth: [] # Indica que esta ruta requiere autenticación con token
  *     responses:
  *       200:
  *         description: Usuario desactivado correctamente
  *       404:
  *         description: Usuario no encontrado
+ *       401:
+ *         description: No autorizado (token inválido o no proporcionado)
  */
-router.delete('/:id', UsuarioController.eliminarUsuario);
+router.delete('/', verifyToken, UsuarioController.eliminarUsuario);
 
 module.exports = router;

@@ -1,11 +1,28 @@
 const db = require('../db');
 
 const buscarUsuarioPorCampoUnico = async ({ numero_documento, correo_personal, correo_institucional }) => {
-  const result = await db.query(`
-    SELECT * FROM usuarios 
-    WHERE numero_documento = $1 OR correo_personal = $2 OR correo_institucional = $3
-  `, [numero_documento, correo_personal, correo_institucional]);
+  const condiciones = [];
+  const valores = [];
 
+  if (numero_documento) {
+    condiciones.push('numero_documento = $' + (valores.length + 1));
+    valores.push(numero_documento);
+  }
+  if (correo_personal) {
+    condiciones.push('correo_personal = $' + (valores.length + 1));
+    valores.push(correo_personal);
+  }
+  if (correo_institucional) {
+    condiciones.push('correo_institucional = $' + (valores.length + 1));
+    valores.push(correo_institucional);
+  }
+
+  const query = `
+    SELECT * FROM usuarios
+    WHERE (${condiciones.join(' OR ')}) AND activo = true
+  `;
+
+  const result = await db.query(query, valores);
   return result.rows;
 };
 
@@ -45,6 +62,7 @@ const obtenerPorDocumento = async (numero_documento) => {
   return result.rows[0];
 };
 
+
 const actualizar = async (numero_documento, datos) => {
   const campos = Object.keys(datos).map((key, index) => `${key} = $${index + 2}`).join(', ');
   const valores = Object.values(datos);
@@ -65,7 +83,7 @@ const eliminarLogico = async (numero_documento) => {
 
 const existingUser = async (correo_institucional) => {
   const result = await db.query(`
-    SELECT * FROM usuarios WHERE correo_institucional = $1 AND activo = true
+    SELECT * FROM usuarios WHERE correo_institucional = $1
   `, [correo_institucional]);
 
   return result.rows[0];

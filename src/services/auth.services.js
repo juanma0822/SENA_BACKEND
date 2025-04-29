@@ -13,6 +13,11 @@ const verifyCredentials = async ({ correo_institucional, contrasena }) => {
     throw { status: 401, message: 'Usuario no encontrado' };
   }
 
+  // Verificar si el usuario está activo
+  if (!usuario.activo) {
+    throw { status: 403, message: 'Usuario inactivo, comunícate con la institución para volverte a activar' };
+  }
+
   const validPassword = await bcrypt.compare(contrasena, usuario.contrasena);
 
   if (!validPassword) {

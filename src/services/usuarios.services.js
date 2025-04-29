@@ -19,9 +19,32 @@ const crearUsuario = async (datos) => {
 
 // Solo si vas a permitir actualizar contraseña
 const actualizarUsuario = async (numero_documento, datos) => {
+  const { correo_personal, correo_institucional } = datos;
+
+  // Validar si los correos ya están en uso por otro usuario
+  if (correo_personal || correo_institucional) {
+    const usuariosExistentes = await UsuarioModel.buscarUsuarioPorCampoUnico({
+      numero_documento: null, // No buscamos por número de documento aquí
+      correo_personal,
+      correo_institucional,
+    });
+
+    // Filtrar usuarios que no sean el actual
+    const duplicados = usuariosExistentes.filter(
+      (usuario) => usuario.numero_documento !== numero_documento
+    );
+
+    if (duplicados.length > 0) {
+      throw new Error('El correo personal o institucional ya está en uso por otro usuario.');
+    }
+  }
+
+  // Si se incluye contraseña, encriptarla antes de actualizar
   if (datos.contrasena) {
     datos.contrasena = await bcrypt.hash(datos.contrasena, 10);
   }
+
+  // Actualizar el usuario
   return await UsuarioModel.actualizar(numero_documento, datos);
 };
 
