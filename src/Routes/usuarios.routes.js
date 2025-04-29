@@ -30,22 +30,54 @@ router.get('/', verifyToken, UsuarioController.obtenerUsuarios);
 
 /**
  * @swagger
- * /api/usuarios/{id}:
+ * /api/usuarios/info:
  *   get:
- *     summary: Obtener un usuario por ID
+ *     summary: Obtener información del usuario autenticado
  *     tags: [Usuarios]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: ID del usuario
+ *     security:
+ *       - bearerAuth: [] # Indica que esta ruta requiere autenticación con token
  *     responses:
  *       200:
- *         description: Datos del usuario
+ *         description: Datos del usuario autenticado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 numero_documento:
+ *                   type: string
+ *                   description: Número de documento del usuario
+ *                 nombres:
+ *                   type: string
+ *                   description: Nombres del usuario
+ *                 apellidos:
+ *                   type: string
+ *                   description: Apellidos del usuario
+ *                 correo_personal:
+ *                   type: string
+ *                   description: Correo personal del usuario
+ *                 correo_institucional:
+ *                   type: string
+ *                   description: Correo institucional del usuario
+ *                 rol:
+ *                   type: string
+ *                   description: Rol del usuario (aprendiz, funcionario, etc.)
+ *                 programa_formacion:
+ *                   type: string
+ *                   description: Programa de formación (solo para aprendices)
+ *                 numero_ficha:
+ *                   type: string
+ *                   description: Número de ficha (solo para aprendices)
+ *                 cargo:
+ *                   type: string
+ *                   description: Cargo del funcionario (solo para funcionarios)
+ *                 area_trabajo:
+ *                   type: string
+ *                   description: Área de trabajo del funcionario (solo para funcionarios)
  *       404:
  *         description: Usuario no encontrado
+ *       401:
+ *         description: No autorizado (token inválido o no proporcionado)
  */
 router.get('/info', verifyToken, UsuarioController.obtenerUsuarioPorId);
 
