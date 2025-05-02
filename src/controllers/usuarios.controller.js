@@ -70,10 +70,27 @@ exports.actualizarUsuario = async (req, res) => {
     const { numero_documento, rol } = req.user; // Extraemos el rol y número de documento del token
     const datos = req.body;
 
-    let usuarioActualizado;
+    // Filtrar los datos que pertenecen a la tabla `usuarios`
+    const datosUsuario = {
+      nombres: datos.nombres,
+      apellidos: datos.apellidos,
+      correo_personal: datos.correo_personal,
+      correo_institucional: datos.correo_institucional,
+      contrasena: datos.contrasena,
+      tipo_documento: datos.tipo_documento,
+      lugar_expedicion: datos.lugar_expedicion,
+      genero: datos.genero,
+      edad: datos.edad,
+      departamento: datos.departamento,
+      municipio: datos.municipio,
+      direccion: datos.direccion,
+      celular: datos.celular,
+      telefono_fijo: datos.telefono_fijo,
+      fecha_nacimiento: datos.fecha_nacimiento,
+    };
 
     // Actualizamos los datos básicos en la tabla `usuarios`
-    usuarioActualizado = await UsuarioService.actualizarUsuario(numero_documento, datos);
+    const usuarioActualizado = await UsuarioService.actualizarUsuario(numero_documento, datosUsuario);
 
     // Dependiendo del rol, actualizamos en las tablas correspondientes
     if (rol === 'aprendiz') {

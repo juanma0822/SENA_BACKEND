@@ -249,8 +249,6 @@ router.post('/guarda', UsuarioController.crearGuarda);
  *   put:
  *     summary: Actualizar información del usuario autenticado
  *     tags: [Usuarios]
- *     security:
- *       - bearerAuth: [] # Indica que esta ruta requiere autenticación con token
  *     requestBody:
  *       required: true
  *       content:
@@ -339,8 +337,6 @@ router.put('/info',verifyToken, UsuarioController.actualizarUsuario);
  *   delete:
  *     summary: Eliminar el usuario autenticado (desactivación lógica)
  *     tags: [Usuarios]
- *     security:
- *       - bearerAuth: [] # Indica que esta ruta requiere autenticación con token
  *     responses:
  *       200:
  *         description: Usuario desactivado correctamente
