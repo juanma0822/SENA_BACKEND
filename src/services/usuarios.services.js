@@ -40,8 +40,11 @@ const actualizarUsuario = async (numero_documento, datos) => {
   }
 
   // Si se incluye contraseña, encriptarla antes de actualizar
-  if (datos.contrasena) {
-    datos.contrasena = await bcrypt.hash(datos.contrasena, 10);
+  if (contrasena && contrasena.trim() !== '') {
+    datos.contrasena = await bcrypt.hash(contrasena, 10);
+  } else {
+    // Si no se envía una contraseña válida, eliminamos el campo para no actualizarlo
+    delete datos.contrasena;
   }
 
   // Actualizar el usuario
