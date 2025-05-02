@@ -12,7 +12,7 @@ const registrarIngresoSalida = async (req, res) => {
     const nuevoRegistro = await IngresosService.registrarIngresoSalida(numero_documento, tipo_ingreso);
     res.status(201).json(nuevoRegistro);
   } catch (error) {
-    res.status(500).json({ error: 'Error interno del servidor', detalles: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
