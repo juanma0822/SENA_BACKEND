@@ -28,6 +28,18 @@ const getIngresosDelDia = async (req, res) => {
   }
 };
 
+const obtenerHistorialPorDocumento = async (req, res) => {
+  try {
+    const { numero_documento } = req.params; // Extraemos el número de documento de los parámetros
+
+    const ingresos = await IngresosService.listarIngresosUsuario(numero_documento);
+    res.status(200).json(ingresos);
+  } catch (error) {
+    console.error('Error al obtener historial de ingresos por documento:', error);
+    res.status(500).json({ error: 'Error interno del servidor', detalles: error.message });
+  }
+};
+
 const obtenerIngresosPorUsuario = async (req, res) => {
   try {
     const { numero_documento } = req.user; // Extraemos el numero_documento del token
@@ -54,6 +66,7 @@ const resumenDiario = async (req, res) => {
 module.exports = {
   registrarIngresoSalida,
   getIngresosDelDia,
+  obtenerHistorialPorDocumento,
   obtenerIngresosPorUsuario,
   resumenDiario,
 };

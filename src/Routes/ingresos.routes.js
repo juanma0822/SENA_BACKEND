@@ -39,6 +39,27 @@ router.get('/ingresos-dia', verifyToken, IngresosController.getIngresosDelDia);
 
 /**
  * @swagger
+ * /api/ingresos/historial-usuario/{numero_documento}:
+ *   get:
+ *     summary: Obtener historial de ingresos de un usuario por su número de documento
+ *     tags: [Ingresos]
+ *     parameters:
+ *       - in: path
+ *         name: numero_documento
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Número de documento del usuario
+ *     responses:
+ *       200:
+ *         description: Historial de ingresos obtenido
+ *       404:
+ *         description: Usuario no encontrado
+ */
+router.get('/historial-usuario/:numero_documento', verifyToken, IngresosController.obtenerHistorialPorDocumento);
+
+/**
+ * @swagger
  * /api/ingresos/historial-usuario:
  *   get:
  *     summary: Obtener historial de ingresos del usuario autenticado
