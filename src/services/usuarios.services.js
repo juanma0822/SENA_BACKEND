@@ -19,7 +19,7 @@ const crearUsuario = async (datos) => {
 
 // Solo si vas a permitir actualizar contraseña
 const actualizarUsuario = async (numero_documento, datos) => {
-  const { correo_personal, correo_institucional } = datos;
+  const { correo_personal, correo_institucional, contrasena } = datos;
 
   // Validar si los correos ya están en uso por otro usuario
   if (correo_personal || correo_institucional) {
