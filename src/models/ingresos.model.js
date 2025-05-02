@@ -31,24 +31,32 @@ const crearIngreso = async (numero_documento, tipo_ingreso) => {
 // Ingresos por usuario - HISTORIAL
 const obtenerIngresosPorUsuario = async (numero_documento) => {
   const result = await db.query(
-    `SELECT * FROM ingresos
+    `SELECT 
+       tipo_ingreso,
+       TO_CHAR(fecha_hora, 'YYYY-MM-DD HH24:MI:SS') AS fecha_hora
+     FROM ingresos
      WHERE numero_documento = $1
      ORDER BY fecha_hora DESC`,
     [numero_documento]
   );
-  return result.rows.map(convertirAHoraColombia);
+
+  return result.rows; // No es necesario aplicar `convertirAHoraColombia` aquí
 };
 
 // Ingresos por usuario - del DÍA
 const obtenerIngresosDelDia = async (numero_documento) => {
   const result = await db.query(
-    `SELECT * FROM ingresos 
+    `SELECT 
+       tipo_ingreso,
+       TO_CHAR(fecha_hora, 'YYYY-MM-DD HH24:MI:SS') AS fecha_hora
+     FROM ingresos 
      WHERE numero_documento = $1 
-     AND (fecha_hora AT TIME ZONE 'America/Bogota')::date = CURRENT_DATE
+       AND fecha_hora::date = CURRENT_DATE
      ORDER BY fecha_hora ASC`,
     [numero_documento]
   );
-  return result.rows.map(convertirAHoraColombia);
+
+  return result.rows;
 };
 
 // Verificar el último ingreso del día
