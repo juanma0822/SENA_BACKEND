@@ -92,7 +92,7 @@ exports.actualizarUsuario = async (req, res) => {
     // Actualizamos los datos básicos en la tabla `usuarios`
     const usuarioActualizado = await UsuarioService.actualizarUsuario(numero_documento, datosUsuario);
 
-    // Dependiendo del rol, actualizamos en las tablas correspondientes
+    // Dependiendo del rol, actualizamos en las tablas correspondientes y obtenemos los datos específicos
     if (rol === 'aprendiz') {
       const aprendizDatos = {
         programa_formacion: datos.programa_formacion,
@@ -101,6 +101,13 @@ exports.actualizarUsuario = async (req, res) => {
         grupoSisben: datos.grupoSisben,
       };
       await AprendizModel.actualizarAprendiz(numero_documento, aprendizDatos);
+
+      // Obtener los datos completos del aprendiz
+      const aprendizCompleto = await AprendizModel.obtenerAprendizPorDoc(numero_documento);
+      return res.json({
+        message: 'Usuario actualizado correctamente',
+        usuario: { ...usuarioActualizado, ...aprendizCompleto },
+      });
     } else if (rol === 'funcionario') {
       const funcionarioDatos = {
         cargo: datos.cargo,
@@ -108,8 +115,16 @@ exports.actualizarUsuario = async (req, res) => {
         tipo_funcionario: datos.tipo_funcionario,
       };
       await FuncionarioModel.actualizarFuncionario(numero_documento, funcionarioDatos);
+
+      // Obtener los datos completos del funcionario
+      const funcionarioCompleto = await FuncionarioModel.obtenerFuncionarioPorDoc(numero_documento);
+      return res.json({
+        message: 'Usuario actualizado correctamente',
+        usuario: { ...usuarioActualizado, ...funcionarioCompleto },
+      });
     }
 
+    // Si no es aprendiz ni funcionario, solo devolvemos los datos básicos
     res.json({
       message: 'Usuario actualizado correctamente',
       usuario: usuarioActualizado,
