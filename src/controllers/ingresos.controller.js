@@ -63,10 +63,28 @@ const resumenDiario = async (req, res) => {
   }
 };
 
+const registrarIngresoSalidaPorGuarda = async (req, res) => {
+  try {
+    const { numero_documento, tipo_ingreso } = req.body;
+
+    // Validar que los campos requeridos estén presentes
+    if (!numero_documento || !tipo_ingreso) {
+      return res.status(400).json({ error: 'El número de documento y el tipo de ingreso son obligatorios.' });
+    }
+
+    const nuevoRegistro = await IngresosService.registrarIngresoSalidaPorGuarda(numero_documento, tipo_ingreso);
+    res.status(201).json(nuevoRegistro);
+  } catch (error) {
+    console.error('Error al registrar ingreso/salida por guarda:', error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   registrarIngresoSalida,
   getIngresosDelDia,
   obtenerHistorialPorDocumento,
   obtenerIngresosPorUsuario,
   resumenDiario,
+  registrarIngresoSalidaPorGuarda
 };

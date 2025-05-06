@@ -34,9 +34,29 @@ const getResumenDiario = async (numero_documento) => {
   return await IngresosModel.obtenerResumenDiario(numero_documento);
 };
 
+const registrarIngresoSalidaPorGuarda = async (numero_documento, tipo_ingreso) => {
+  const ultimo = await IngresosModel.obtenerUltimoIngresoDelDia(numero_documento);
+
+  if (tipo_ingreso === 'entrada') {
+    if (ultimo?.tipo_ingreso === 'entrada') {
+      throw new Error('El usuario ya registró una entrada hoy. Debe registrar una salida antes de una nueva entrada.');
+    }
+  }
+
+  if (tipo_ingreso === 'salida') {
+    if (!ultimo || ultimo.tipo_ingreso !== 'entrada') {
+      throw new Error('El usuario no tiene una entrada registrada pendiente para cerrar con una salida.');
+    }
+  }
+
+  const nuevo = await IngresosModel.crearIngreso(numero_documento, tipo_ingreso);
+  return nuevo;
+};
+
 module.exports = {
   registrarIngresoSalida,
   listarIngresosUsuarioDia,
   listarIngresosUsuario,
   getResumenDiario,
+  registrarIngresoSalidaPorGuarda,
 };
