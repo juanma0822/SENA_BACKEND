@@ -14,6 +14,7 @@ const guardaRoutes = require('./Routes/guardas.routes');
 const adminRoutes = require('./Routes/admin.routes');
 const authRoutes = require('./Routes/auth.routes'); 
 const ingresoRoutes = require('./Routes/ingresos.routes'); // NUEVA RUTA DE INGRESOS
+const estadisticasRoutes = require('./Routes/estadisticas.routes'); // NUEVA RUTA DE ESTADÍSTICAS
 
 const app = express();
 app.use(cors());
@@ -40,6 +41,7 @@ app.use('/api/guardas', guardaRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/auth', authRoutes); 
 app.use('/api/ingresos', ingresoRoutes); // NUEVA RUTA DE INGRESOS
+app.use('/api/estadisticas', estadisticasRoutes); // RUTA DE ESTADISTICAS
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {  // Cambié 'localhost' por '0.0.0.0'
