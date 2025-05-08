@@ -16,6 +16,7 @@ const authRoutes = require('./Routes/auth.routes');
 const ingresoRoutes = require('./Routes/ingresos.routes'); // NUEVA RUTA DE INGRESOS
 const estadisticasRoutes = require('./Routes/estadisticas.routes'); // NUEVA RUTA DE ESTADÍSTICAS
 const visitantesRoutes = require('./Routes/visitantes.routes'); // NUEVA RUTA DE VISITANTES
+const llavesRoutes = require('./Routes/llaves.routes'); // NUEVA RUTA DE LLAVES
 
 const app = express();
 app.use(cors());
@@ -44,6 +45,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/ingresos', ingresoRoutes); // NUEVA RUTA DE INGRESOS
 app.use('/api/estadisticas', estadisticasRoutes); // RUTA DE ESTADISTICAS
 app.use('/api/visitantes', visitantesRoutes); // NUEVA RUTA DE VISITANTES
+app.use('/api/llaves', llavesRoutes); // NUEVA RUTA DE LLAVES
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {  // Cambié 'localhost' por '0.0.0.0'
