@@ -14,7 +14,7 @@ const {verifyToken} = require('../middleware/auth.middleware');
  *         name: rol
  *         schema:
  *           type: string
- *         description: Filtrar usuarios por rol (ejemplo: funcionario, aprendiz, guarda)
+ *         description: Filtrar usuarios por rol
  *     responses:
  *       200:
  *         description: Lista de usuarios filtrados o todos los usuarios
@@ -42,7 +42,7 @@ const {verifyToken} = require('../middleware/auth.middleware');
  *                     description: Correo institucional del usuario
  *                   rol:
  *                     type: string
- *                     description: Rol del usuario (aprendiz, funcionario, guarda, etc.)
+ *                     description: Rol del usuario
  *       500:
  *         description: Error interno del servidor
  */
