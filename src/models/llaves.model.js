@@ -9,6 +9,24 @@ const createLlave = async (nombre_llave, descripcion) => {
   return result.rows[0];
 };
 
+const obtenerLlavesEnUso = async () => {
+  const query = `
+    SELECT 
+      pl.id_prestamo,
+      l.id_llave,
+      l.nombre_llave,
+      l.descripcion,
+      pl.numero_documento,
+      pl.registrado_por,
+      pl.fecha_entrega
+    FROM prestamo_llaves pl
+    INNER JOIN llaves l ON pl.id_llave = l.id_llave
+    WHERE pl.fecha_devolucion IS NULL;
+  `;
+  const result = await db.query(query);
+  return result.rows;
+};
+
 const obtenerLlavesDisponibles = async () => {
   const query = `
     SELECT l.*
@@ -45,6 +63,7 @@ const devolverLlave = async (id_prestamo) => {
 
 module.exports = {
   createLlave,
+  obtenerLlavesEnUso,
   obtenerLlavesDisponibles,
   registrarPrestamoLlave,
   devolverLlave,

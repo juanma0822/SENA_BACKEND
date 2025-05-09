@@ -38,6 +38,56 @@ router.post('/prestamos-llaves', verifyToken, LlavesController.registrarPrestamo
 
 /**
  * @swagger
+ * /api/llaves/prestamos-llaves/en-uso:
+ *   get:
+ *     summary: Obtener las llaves actualmente en uso
+ *     tags: [Llaves]
+ *     responses:
+ *       200:
+ *         description: Lista de llaves en uso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id_prestamo:
+ *                     type: integer
+ *                     description: ID del préstamo
+ *                     example: 1
+ *                   id_llave:
+ *                     type: integer
+ *                     description: ID de la llave
+ *                     example: 1
+ *                   nombre_llave:
+ *                     type: string
+ *                     description: Nombre de la llave
+ *                     example: Llave Principal
+ *                   descripcion:
+ *                     type: string
+ *                     description: Descripción de la llave
+ *                     example: Llave de acceso principal al edificio
+ *                   numero_documento:
+ *                     type: string
+ *                     description: Número de documento del usuario que tiene la llave
+ *                     example: 123456789
+ *                   registrado_por:
+ *                     type: string
+ *                     description: Número de documento del guarda que registró el préstamo
+ *                     example: 987654321
+ *                   fecha_entrega:
+ *                     type: string
+ *                     format: date-time
+ *                     description: Fecha y hora en que se entregó la llave
+ *                     example: 2025-05-06T14:30:00.000Z
+ *       500:
+ *         description: Error interno del servidor
+ */
+router.get('/prestamos-llaves/en-uso', verifyToken, LlavesController.obtenerLlavesEnUso);
+
+/**
+ * @swagger
  * /api/prestamos-llaves/devolver/{id_prestamo}:
  *   put:
  *     summary: Registrar la devolución de una llave

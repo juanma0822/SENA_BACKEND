@@ -9,6 +9,15 @@ const createLlave = async (nombre_llave, descripcion) => {
   }
 };
 
+const obtenerLlavesEnUso = async () => {
+  try {
+    const llavesEnUso = await LlavesModel.obtenerLlavesEnUso();
+    return llavesEnUso;
+  } catch (error) {
+    throw new Error('Error al obtener las llaves en uso.');
+  }
+};
+
 const obtenerLlavesDisponibles = async () => {
   try {
     const llaves = await LlavesModel.obtenerLlavesDisponibles();
@@ -38,6 +47,7 @@ const devolverLlave = async (id_prestamo) => {
 
 module.exports = {
   createLlave,
+  obtenerLlavesEnUso,
   obtenerLlavesDisponibles,
   registrarPrestamoLlave,
   devolverLlave,

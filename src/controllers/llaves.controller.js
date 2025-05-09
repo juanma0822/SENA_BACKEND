@@ -16,6 +16,16 @@ const createLlave = async (req, res) => {
   }
 };
 
+const obtenerLlavesEnUso = async (req, res) => {
+  try {
+    const llavesEnUso = await LlavesService.obtenerLlavesEnUso();
+    res.status(200).json(llavesEnUso);
+  } catch (error) {
+    console.error('Error al obtener las llaves en uso:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
 const obtenerLlavesDisponibles = async (req, res) => {
   try {
     const llaves = await LlavesService.obtenerLlavesDisponibles();
@@ -67,6 +77,7 @@ const devolverLlave = async (req, res) => {
 
 module.exports = {
   createLlave,
+  obtenerLlavesEnUso,
   obtenerLlavesDisponibles,
   registrarPrestamoLlave,
   devolverLlave,
