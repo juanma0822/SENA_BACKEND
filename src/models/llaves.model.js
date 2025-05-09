@@ -29,7 +29,10 @@ const obtenerLlavesEnUso = async () => {
 
 const obtenerLlavesDisponibles = async () => {
   const query = `
-    SELECT l.*
+    SELECT DISTINCT ON (l.id_llave) 
+      l.id_llave,
+      l.nombre_llave,
+      l.descripcion
     FROM llaves l
     LEFT JOIN prestamo_llaves pl ON l.id_llave = pl.id_llave
     WHERE pl.fecha_devolucion IS NOT NULL OR pl.id_llave IS NULL;
