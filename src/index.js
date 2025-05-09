@@ -17,6 +17,7 @@ const ingresoRoutes = require('./Routes/ingresos.routes'); // NUEVA RUTA DE INGR
 const estadisticasRoutes = require('./Routes/estadisticas.routes'); // NUEVA RUTA DE ESTADÍSTICAS
 const visitantesRoutes = require('./Routes/visitantes.routes'); // NUEVA RUTA DE VISITANTES
 const llavesRoutes = require('./Routes/llaves.routes'); // NUEVA RUTA DE LLAVES
+const dispositivosRoutes = require('./Routes/dispositivos.routes'); // NUEVA RUTA DE DISPOSITIVOS
 
 const app = express();
 app.use(cors());
@@ -46,6 +47,7 @@ app.use('/api/ingresos', ingresoRoutes); // NUEVA RUTA DE INGRESOS
 app.use('/api/estadisticas', estadisticasRoutes); // RUTA DE ESTADISTICAS
 app.use('/api/visitantes', visitantesRoutes); // NUEVA RUTA DE VISITANTES
 app.use('/api/llaves', llavesRoutes); // NUEVA RUTA DE LLAVES
+app.use('/api/dispositivos', dispositivosRoutes); // NUEVA RUTA DE DISPOSITIVOS
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {  // Cambié 'localhost' por '0.0.0.0'

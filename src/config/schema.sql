@@ -70,6 +70,7 @@ CREATE TABLE dispositivos_salida (
   numero_documento VARCHAR,
   registrado_por VARCHAR,
   fecha_hora_salida TIMESTAMP,
+  numero_serie VARCHAR,
   CONSTRAINT fk_salida_usuario FOREIGN KEY (numero_documento) REFERENCES usuarios(numero_documento),
   CONSTRAINT fk_salida_registrador FOREIGN KEY (registrado_por) REFERENCES usuarios(numero_documento)
 );
