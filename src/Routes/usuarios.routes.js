@@ -5,26 +5,46 @@ const {verifyToken} = require('../middleware/auth.middleware');
 
 /**
  * @swagger
- * tags:
- *   name: Usuarios
- *   description: Gestión de usuarios
- */
-
-/**
- * @swagger
  * /api/usuarios:
  *   get:
- *     summary: Obtener todos los usuarios
+ *     summary: Obtener todos los usuarios o filtrar por rol
  *     tags: [Usuarios]
+ *     parameters:
+ *       - in: query
+ *         name: rol
+ *         schema:
+ *           type: string
+ *         description: Filtrar usuarios por rol (ejemplo: funcionario, aprendiz, guarda)
  *     responses:
  *       200:
- *         description: Lista de usuarios activos
+ *         description: Lista de usuarios filtrados o todos los usuarios
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
  *                 type: object
+ *                 properties:
+ *                   numero_documento:
+ *                     type: string
+ *                     description: Número de documento del usuario
+ *                   nombres:
+ *                     type: string
+ *                     description: Nombres del usuario
+ *                   apellidos:
+ *                     type: string
+ *                     description: Apellidos del usuario
+ *                   correo_personal:
+ *                     type: string
+ *                     description: Correo personal del usuario
+ *                   correo_institucional:
+ *                     type: string
+ *                     description: Correo institucional del usuario
+ *                   rol:
+ *                     type: string
+ *                     description: Rol del usuario (aprendiz, funcionario, guarda, etc.)
+ *       500:
+ *         description: Error interno del servidor
  */
 router.get('/', verifyToken, UsuarioController.obtenerUsuarios);
 

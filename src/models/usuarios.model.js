@@ -53,7 +53,34 @@ const crearUsuario = async (datos) => {
 };
 
 const obtenerTodos = async () => {
-  const result = await db.query('SELECT * FROM usuarios WHERE activo = true');
+  const result = await db.query(`
+    SELECT 
+      numero_documento, 
+      nombres, 
+      apellidos, 
+      correo_personal, 
+      correo_institucional, 
+      rol, 
+      tipo_documento 
+    FROM usuarios 
+    WHERE activo = true
+  `);
+  return result.rows;
+};
+
+const obtenerPorRol = async (rol) => {
+  const result = await db.query(`
+    SELECT 
+      numero_documento, 
+      nombres, 
+      apellidos, 
+      correo_personal, 
+      correo_institucional, 
+      rol, 
+      tipo_documento 
+    FROM usuarios 
+    WHERE rol = $1 AND activo = true
+  `, [rol]);
   return result.rows;
 };
 
@@ -93,6 +120,7 @@ module.exports = {
   buscarUsuarioPorCampoUnico,
   crearUsuario,
   obtenerTodos,
+  obtenerPorRol,
   obtenerPorDocumento,
   actualizar,
   eliminarLogico,

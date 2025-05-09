@@ -16,6 +16,58 @@ const createLlave = async (req, res) => {
   }
 };
 
+const obtenerLlavesDisponibles = async (req, res) => {
+  try {
+    const llaves = await LlavesService.obtenerLlavesDisponibles();
+    res.status(200).json(llaves);
+  } catch (error) {
+    console.error('Error al obtener las llaves disponibles:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+const registrarPrestamoLlave = async (req, res) => {
+  try {
+    const { id_llave, numero_documento } = req.body;
+    const { numero_documento: registrado_por } = req.user; // Extraemos el número de documento del token
+
+    if (!id_llave || !numero_documento) {
+      return res.status(400).json({ error: 'Faltan datos para registrar el préstamo.' });
+    }
+
+    const prestamo = await LlavesService.registrarPrestamoLlave({
+      id_llave,
+      numero_documento,
+      registrado_por,
+    });
+
+    res.status(201).json(prestamo);
+  } catch (error) {
+    console.error('Error al registrar el préstamo de la llave:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+const devolverLlave = async (req, res) => {
+  try {
+    const { id_prestamo } = req.params;
+
+    if (!id_prestamo) {
+      return res.status(400).json({ error: 'El ID del préstamo es obligatorio.' });
+    }
+
+    const devolucion = await LlavesService.devolverLlave(id_prestamo);
+
+    res.status(200).json(devolucion);
+  } catch (error) {
+    console.error('Error al devolver la llave:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
 module.exports = {
   createLlave,
+  obtenerLlavesDisponibles,
+  registrarPrestamoLlave,
+  devolverLlave,
 };

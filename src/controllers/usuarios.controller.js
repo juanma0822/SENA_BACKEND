@@ -31,9 +31,21 @@ exports.crearGuarda = async (req, res) => {
 };
 exports.obtenerUsuarios = async (req, res) => {
   try {
-    const usuarios = await UsuarioModel.obtenerTodos();
+    const { rol } = req.query; // Extraemos el parámetro de consulta "rol"
+
+    let usuarios;
+
+    if (rol) {
+      // Si se proporciona un rol, filtramos los usuarios por ese rol
+      usuarios = await UsuarioModel.obtenerPorRol(rol);
+    } else {
+      // Si no se proporciona un rol, obtenemos todos los usuarios
+      usuarios = await UsuarioModel.obtenerTodos();
+    }
+
     res.json(usuarios);
   } catch (error) {
+    console.error('Error al obtener usuarios:', error);
     res.status(500).json({ error: 'Error al obtener usuarios' });
   }
 };
