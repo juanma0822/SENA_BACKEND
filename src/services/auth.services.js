@@ -59,11 +59,11 @@ const recuperarContrasena = async ({ correo_institucional, numero_documento }) =
 
   // Enviar correos al correo personal e institucional
   const emailContent = generateEmailTemplate(
-    `<h2>Recuperación de contraseña</h2>
-     <p>Hola ${usuario.nombres} ${usuario.apellidos},</p>
-     <p>Se ha generado una nueva contraseña temporal para tu cuenta:</p>
-     <p><strong>${nuevaContrasena}</strong></p>
-     <p>Por favor, utiliza esta contraseña para iniciar sesión y cámbiala inmediatamente.</p>`,
+    {
+      nombre: usuario.nombres,
+      apellido: usuario.apellidos,
+      nuevaContrasena: nuevaContrasena,
+    },
     `<p>Si no solicitaste este cambio, por favor contacta a la institución.</p>`
   );
 
