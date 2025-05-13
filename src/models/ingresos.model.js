@@ -92,6 +92,25 @@ const obtenerResumenDiario = async (numero_documento) => {
   return result.rows;
 };
 
+const obtenerFuncionariosDelDia = async () => {
+  const query = `
+    SELECT DISTINCT
+      u.numero_documento,
+      u.nombres,
+      u.apellidos,
+      f.cargo
+    FROM ingresos i
+    INNER JOIN usuarios u ON i.numero_documento = u.numero_documento
+    LEFT JOIN funcionarios f ON u.numero_documento = f.numero_documento
+    WHERE i.tipo_ingreso = 'entrada'
+      AND i.fecha_hora::date = CURRENT_DATE
+      AND (u.rol = 'funcionario' OR u.rol = 'admin')
+    ORDER BY u.nombres, u.apellidos;
+  `;
+  const result = await db.query(query);
+  return result.rows;
+};
+
 
 module.exports = {
   crearIngreso,
@@ -99,4 +118,5 @@ module.exports = {
   obtenerIngresosDelDia,
   obtenerUltimoIngresoDelDia,
   obtenerResumenDiario,
+  obtenerFuncionariosDelDia
 };

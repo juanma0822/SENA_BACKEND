@@ -53,10 +53,20 @@ const registrarIngresoSalidaPorGuarda = async (numero_documento, tipo_ingreso) =
   return nuevo;
 };
 
+const obtenerFuncionariosDelDia = async () => {
+  try {
+    const funcionarios = await IngresosModel.obtenerFuncionariosDelDia();
+    return funcionarios;
+  } catch (error) {
+    throw new Error('Error al obtener los funcionarios del día.');
+  }
+};
+
 module.exports = {
   registrarIngresoSalida,
   listarIngresosUsuarioDia,
   listarIngresosUsuario,
   getResumenDiario,
   registrarIngresoSalidaPorGuarda,
+  obtenerFuncionariosDelDia,
 };

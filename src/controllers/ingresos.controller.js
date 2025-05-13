@@ -80,11 +80,22 @@ const registrarIngresoSalidaPorGuarda = async (req, res) => {
   }
 };
 
+const obtenerFuncionariosDelDia = async (req, res) => {
+  try {
+    const funcionarios = await IngresosService.obtenerFuncionariosDelDia();
+    res.status(200).json(funcionarios);
+  } catch (error) {
+    console.error('Error al obtener los funcionarios del día:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
 module.exports = {
   registrarIngresoSalida,
   getIngresosDelDia,
   obtenerHistorialPorDocumento,
   obtenerIngresosPorUsuario,
   resumenDiario,
-  registrarIngresoSalidaPorGuarda
+  registrarIngresoSalidaPorGuarda,
+  obtenerFuncionariosDelDia,
 };

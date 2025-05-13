@@ -4,6 +4,42 @@ const IngresosController = require('../controllers/ingresos.controller');
 const { verifyToken } = require('../middleware/auth.middleware');
 
 
+/**
+ * @swagger
+ * /api/ingresos/funcionariosdia:
+ *   get:
+ *     summary: Obtener los funcionarios que hicieron ingreso en el día actual
+ *     tags: [Ingresos]
+ *     responses:
+ *       200:
+ *         description: Lista de funcionarios que hicieron ingreso en el día actual
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   numero_documento:
+ *                     type: string
+ *                     description: Número de documento del funcionario
+ *                     example: 123456789
+ *                   nombres:
+ *                     type: string
+ *                     description: Nombres del funcionario
+ *                     example: Juan
+ *                   apellidos:
+ *                     type: string
+ *                     description: Apellidos del funcionario
+ *                     example: Pérez
+ *                   cargo:
+ *                     type: string
+ *                     description: Cargo del funcionario
+ *                     example: Coordinador
+ *       500:
+ *         description: Error interno del servidor
+ */
+router.get('/funcionariosdia', verifyToken, IngresosController.obtenerFuncionariosDelDia);
 
 /**
  * @swagger
