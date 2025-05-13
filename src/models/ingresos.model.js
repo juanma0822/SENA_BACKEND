@@ -103,7 +103,7 @@ const obtenerFuncionariosDelDia = async () => {
     INNER JOIN usuarios u ON i.numero_documento = u.numero_documento
     LEFT JOIN funcionarios f ON u.numero_documento = f.numero_documento
     WHERE i.tipo_ingreso = 'entrada'
-      AND i.fecha_hora::date = CURRENT_DATE
+      AND i.fecha_hora::date = (CURRENT_DATE AT TIME ZONE 'America/Bogota')::date
       AND (u.rol = 'funcionario' OR u.rol = 'admin')
     ORDER BY u.nombres, u.apellidos;
   `;
