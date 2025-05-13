@@ -116,6 +116,14 @@ const existingUser = async (correo_institucional) => {
   return result.rows[0];
 };
 
+const actualizarContrasena = async (numero_documento, nuevaContrasena) => {
+  const result = await db.query(
+    `UPDATE usuarios SET contrasena = $1 WHERE numero_documento = $2 RETURNING *`,
+    [nuevaContrasena, numero_documento]
+  );
+  return result.rows[0];
+};
+
 module.exports = {
   buscarUsuarioPorCampoUnico,
   crearUsuario,
@@ -125,4 +133,5 @@ module.exports = {
   actualizar,
   eliminarLogico,
   existingUser,
+  actualizarContrasena,
 };

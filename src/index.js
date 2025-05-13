@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const db = require('./db');
+const path = require('path');
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./docs/swagger');
@@ -22,6 +23,10 @@ const dispositivosRoutes = require('./Routes/dispositivos.routes'); // NUEVA RUT
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+
+// Servir archivos estáticos (como imágenes) desde la carpeta 'Public'
+app.use(express.static(path.join(__dirname, '../Public')));
 
 // Documentación Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));

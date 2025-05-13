@@ -11,3 +11,15 @@ exports.verifyLogin = async (req, res) => {
     res.status(error.status || 400).json({ error: error.message });
   }
 };
+
+exports.recuperarContrasena = async (req, res) => {
+  try {
+    const { correo_institucional, numero_documento } = req.body;
+
+    const response = await AuthService.recuperarContrasena({ correo_institucional, numero_documento });
+
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(error.status || 400).json({ error: error.message });
+  }
+};
